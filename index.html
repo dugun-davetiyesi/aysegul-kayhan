@@ -901,11 +901,11 @@ Düğün
 <script>
   // ── SPLASH + MÜZİK ──
 
- const audio = document.getElementById('bg-music'); 
+   let audio;
   let isMusicPlaying = false; 
  
   function openInvitation() {
-    const audio = document.getElementById('bg-music');
+    audio = document.getElementById('bg-music');
     audio.volume = 0.5;
     audio.play().catch(() => {});
 
