@@ -899,31 +899,37 @@ Düğün
 <canvas id="confetti-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9998;"></canvas>
 
 <script>
-  // ── SPLASH + MÜZİK ──
-
-   let audio;
+ // ── SPLASH + MÜZİK ──
   let isMusicPlaying = false; 
- 
+
   function openInvitation() {
-    audio = document.getElementById('bg-music');
-    audio.volume = 0.5;
-    audio.play().catch(() => {});
+    const audioElement = document.getElementById('bg-music');
+    
+    if (audioElement) {
+      audioElement.volume = 0.5;
+      audioElement.play()
+        .then(() => { isMusicPlaying = true; })
+        .catch((err) => { console.log("Müzik çalınamadı:", err); });
+    }
 
     const splash = document.getElementById('splash');
-    splash.classList.add('hide');
-    setTimeout(() => splash.style.display = 'none', 700);
+    if (splash) {
+      splash.classList.add('hide');
+      setTimeout(() => splash.style.display = 'none', 700);
+    }
   }
- document.addEventListener('visibilitychange', function() {
-    
-    if (!isMusicPlaying) return; 
+
+  // ── SEKME DEĞİŞİKLİĞİ KONTROLÜ ──
+  document.addEventListener('visibilitychange', function() {
+    const audioElement = document.getElementById('bg-music');
+    if (!audioElement || !isMusicPlaying) return; 
 
     if (document.hidden) {
-     
-      audio.pause();
+      audioElement.pause();
     } else {
-     
-      audio.play().catch(() => {});
+      audioElement.play().catch(() => {});
     }
+  });
 
   // ── COUNTDOWN ──
   function calcCD(target) {
