@@ -900,6 +900,10 @@ Düğün
 
 <script>
   // ── SPLASH + MÜZİK ──
+
+ const audio = document.getElementById('bg-music'); 
+  let isMusicPlaying = false; 
+ 
   function openInvitation() {
     const audio = document.getElementById('bg-music');
     audio.volume = 0.5;
@@ -909,6 +913,17 @@ Düğün
     splash.classList.add('hide');
     setTimeout(() => splash.style.display = 'none', 700);
   }
+ document.addEventListener('visibilitychange', function() {
+    
+    if (!isMusicPlaying) return; 
+
+    if (document.hidden) {
+     
+      audio.pause();
+    } else {
+     
+      audio.play().catch(() => {});
+    }
 
   // ── COUNTDOWN ──
   function calcCD(target) {
